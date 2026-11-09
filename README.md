@@ -27,3 +27,15 @@ npm run build          # production build into dist/
 ```
 
 Tasks are stored in the browser's `localStorage`; there is no backend.
+
+## Container image
+
+Multi-stage build: Node builds the app, then only the built files go into a non-root `nginx-unprivileged` image that listens on port 8080.
+
+```sh
+docker build -t taskflow-app:dev .
+docker run --rm -p 8080:8080 taskflow-app:dev   # http://localhost:8080
+npm run test:image                              # builds and checks the image
+```
+
+`nginx.conf` sets long caching only for the hashed files under `/assets/` and `no-cache` for `index.html`. The security headers live in `security-headers.conf` and are included in every location that sets its own `add_header`, because nginx drops inherited headers in a location that defines any.

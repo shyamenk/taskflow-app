@@ -10,7 +10,8 @@
     "test": "vitest run",
     "preview": "vite preview",
     "format": "prettier --write .",
-    "format:check": "prettier --check ."
+    "format:check": "prettier --check .",
+    "test:image": "bash scripts/test-image.sh"
   },
   "dependencies": {
     "react": "^19.3.1",
